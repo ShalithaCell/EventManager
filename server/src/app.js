@@ -3,7 +3,10 @@ const koaBody = require('koa-body');
 const KoaStatic = require('koa-static');
 const cors = require('@koa/cors');
 const router = require('./api');
-const { exceptionService } = require('./services');
+const { dbContext, exceptionService } = require('./services');
+
+// init the database connection.
+dbContext();
 
 const app = new Koa();
 
