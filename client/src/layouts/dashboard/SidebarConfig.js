@@ -18,6 +18,11 @@ const sidebarConfig = [
     icon: getIcon(pieChart2Fill)
   },
   {
+    title: 'events',
+    path: '/dashboard/events',
+    icon: getIcon(pieChart2Fill)
+  },
+  {
     title: 'user',
     path: '/dashboard/user',
     icon: getIcon(peopleFill)
