@@ -6,7 +6,20 @@ import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import {
+  Box,
+  Link,
+  Card,
+  Grid,
+  Avatar,
+  Typography,
+  CardContent,
+  Button,
+  Divider
+} from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import ShareIcon from '@mui/icons-material/Share';
+
 // utils
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
@@ -63,8 +76,8 @@ EventCard.propTypes = {
 export default function EventCard({ post, index }) {
   const { id, author, summary, location, description, imageURL, start, end, attendees, category } =
     post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
+  const latestPostLarge = false;
+  const latestPost = false;
 
   const POST_INFO = [
     { number: 20, icon: messageCircleFill },
@@ -156,7 +169,7 @@ export default function EventCard({ post, index }) {
               })
             }}
           >
-            {title}
+            {description}
           </TitleStyle>
 
           <InfoStyle>
@@ -177,6 +190,19 @@ export default function EventCard({ post, index }) {
               </Box>
             ))}
           </InfoStyle>
+          <Box sx={{ mt: '2rem' }}>
+            <Divider variant="middle" />
+            <Button
+              fullWidth
+              target="_blank"
+              variant="contained"
+              className="mt-6"
+              color="secondary"
+              startIcon={<ShareIcon />}
+            >
+              Share to LinkedIn
+            </Button>
+          </Box>
         </CardContent>
       </Card>
     </Grid>

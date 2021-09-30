@@ -11,8 +11,8 @@ const events = [...Array(23)].map((_, index) => ({
   description: 'Test',
   imageURL:
     'https://i.picsum.photos/id/866/200/300.jpg?hmac=rcadCENKh4rD6MAp6V_ma-AyWv641M4iiOpe1RyFHeI',
-  start: Date.now,
-  end: Date.now,
+  start: Date.now(),
+  end: Date.now(),
   attendees: ['shalitha', 'tkily'],
   category: 'Test'
 }));

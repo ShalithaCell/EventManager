@@ -1,13 +1,12 @@
-import { Icon } from '@iconify/react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@mui/material';
 // components
 import Page from '../components/Page';
-import { BlogPostCard, BlogPostsSort, BlogPostsSearch } from '../components/_dashboard/blog';
 //
-import POSTS from '../_mocks_/blog';
+import EVENTS from '../_mocks_/events';
+import EventsSearch from '../components/_dashboard/event/EventsSearch';
+import EventCard from '../components/_dashboard/event/EventCard';
+import EventsSort from '../components/_dashboard/event/EventSort';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +29,13 @@ export default function Events() {
         </Stack>
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
-          <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
+          <EventsSearch events={EVENTS} />
+          <EventsSort options={SORT_OPTIONS} />
         </Stack>
 
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
+          {EVENTS.map((event, index) => (
+            <EventCard key={event.id} post={event} index={index} />
           ))}
         </Grid>
       </Container>
