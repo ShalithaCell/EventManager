@@ -7,9 +7,7 @@ import { Card, CardHeader } from '@mui/material';
 import { fNumber } from '../../../utils/formatNumber';
 //
 import { BaseOptionChart } from '../../charts';
-
 // ----------------------------------------------------------------------
-
 const CHART_HEIGHT = 372;
 const LEGEND_HEIGHT = 72;
 
