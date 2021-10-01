@@ -11,6 +11,9 @@ import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
+export { default as LinkedIn } from './LinkedIn';
+export { default as LinkedInPopUp } from './LinkedInPopUp';
+export { default } from './LinkedIn';
 
 ReactDOM.render(
   <HelmetProvider>
