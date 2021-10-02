@@ -21,7 +21,7 @@ app
     .use(exceptionService.errorHandler) // register generic error handler middleware
     .use(exceptionService.jsonErrorHandler) // register json error handler middleware
     .use(cors()) // allowed CORS
-    .use(router()) // Use the Router on the sub routes
+    .use(router())
     .use(KoaStatic('public')); // server statics
 
 // Bootstrap the server

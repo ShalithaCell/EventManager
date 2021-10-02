@@ -2,7 +2,7 @@ const Router = require('koa-router');
 const StatusCodes = require('http-status-codes');
 const { version } = require('../../../config');
 const linkedInCredentials = require('../../../../credentials.linkedin');
-const { secureTokenService, InMemoryDb } = require('../../../services');
+const { secureTokenService, InMemoryDb, communicationService } = require('../../../services');
 const { Response } = require("../../../types");
 
 // Prefix all routes with: /auth
@@ -63,6 +63,8 @@ router.get('/callback', async (ctx, next) =>
         }
 
         await InMemoryDb.save('authCodes', newAuthDict);
+
+        communicationService.GetLinkedInAccessToken(code, state);
 
         ctx.redirect(url);
     }
