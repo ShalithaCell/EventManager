@@ -1,6 +1,9 @@
 const Router = require('koa-router');
 const StatusCodes = require('http-status-codes');
 const { version } = require('../../../config');
+const linkedInCredentials = require('../../../../credentials.linkedin');
+const { secureTokenService, InMemoryDb, communicationService } = require('../../../services');
+const { Response } = require("../../../types");
 
 // Prefix all routes with: /auth
 const router = new Router({
@@ -10,21 +13,65 @@ const router = new Router({
 // Routes will go here
 
 // user sign in method
-router.post('/', async (ctx, next) =>
+router.get('/', async (ctx, next) =>
 {
-    // const request = Object.setPrototypeOf(ctx.request.body, CredentialType.prototype);
-    // // Check if any of the data field not empty
-    //
-    // if (!request.isValid())
-    // {
-    //     ctx.response.status = StatusCodes.BAD_REQUEST;
-    //     ctx.body = 'Please enter username and password';
-    //     next().then();
-    //
-    //     return;
-    // }
+    let obj;
 
-    // await authenticate.passwordSignInAsync(ctx, request);
+    const secureCode = secureTokenService.randomValueHex(20);
+
+    await InMemoryDb.save('token', secureCode);
+
+    const url = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${linkedInCredentials.client_id}&redirect_uri=${linkedInCredentials.redirect_url}&state=${secureCode}&scope=${linkedInCredentials.scopes}`;
+
+    ctx.redirect(url);
+
+    next().then();
+});
+
+router.get('/callback', async (ctx, next) =>
+{
+    const { state, code } = ctx.request.query;
+
+    const token = await InMemoryDb.get('token');
+
+    if (state === token)
+    {
+        const url = `http://localhost:3000/dashboard/events?code=${state}`;
+
+        const authDict = await InMemoryDb.get('authCodes');
+
+        let newAuthDict;
+
+        if (authDict)
+        {
+            newAuthDict = [
+                ...authDict,
+                {
+                    state,
+                    code,
+                },
+            ];
+        }
+        else
+        {
+            newAuthDict = [
+                {
+                    state,
+                    code,
+                },
+            ];
+        }
+
+        await InMemoryDb.save('authCodes', newAuthDict);
+
+        communicationService.GetLinkedInAccessToken(code, state);
+
+        ctx.redirect(url);
+    }
+    else
+    {
+        ctx.redirect('http://localhost:3000/404');
+    }
     next().then();
 });
 
