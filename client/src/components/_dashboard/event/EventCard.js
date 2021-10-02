@@ -15,16 +15,20 @@ import {
   Typography,
   CardContent,
   Button,
-  Divider
+  Divider,
+  Dialog,
+  DialogTitle
 } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import ShareIcon from '@mui/icons-material/Share';
 
 // utils
+import { useState } from 'react';
+import { Alert } from '@mui/lab';
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../SvgIconStyle';
+import communicationService from '../../../utils/communication/communication.service';
 
 // ----------------------------------------------------------------------
 
@@ -70,10 +74,11 @@ const CoverImgStyle = styled('img')({
 
 EventCard.propTypes = {
   post: PropTypes.object.isRequired,
-  index: PropTypes.number
+  index: PropTypes.number,
+  token: PropTypes.string
 };
 
-export default function EventCard({ post, index }) {
+export default function EventCard({ post, index, token }) {
   const { id, author, summary, location, description, imageURL, start, end, attendees, category } =
     post;
   const latestPostLarge = false;
@@ -84,6 +89,28 @@ export default function EventCard({ post, index }) {
     { number: 20, icon: eyeFill },
     { number: 20, icon: shareFill }
   ];
+
+  const [open, setOpen] = useState(false);
+
+  const login = () => {
+    window.location.href = 'http://localhost:5000/api/v1/auth';
+  };
+
+  const sharePost = () => {
+    console.log('called');
+    communicationService.sharePost(
+      {
+        code: token
+      },
+      (res) => {
+        console.log(res);
+        setOpen(true);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
 
   return (
     <Grid item xs={12} sm={6} md={3}>
@@ -192,19 +219,37 @@ export default function EventCard({ post, index }) {
           </InfoStyle>
           <Box sx={{ mt: '2rem' }}>
             <Divider variant="middle" />
-            <Button
-              fullWidth
-              target="_blank"
-              variant="contained"
-              className="mt-6"
-              color="secondary"
-              startIcon={<ShareIcon />}
-            >
-              Share to LinkedIn
-            </Button>
+            {token ? (
+              <Button
+                fullWidth
+                target="_blank"
+                variant="contained"
+                className="mt-6"
+                color="secondary"
+                onClick={sharePost}
+                startIcon={<ShareIcon />}
+              >
+                Share to LinkedIn
+              </Button>
+            ) : (
+              <Button
+                fullWidth
+                target="_blank"
+                variant="contained"
+                className="mt-6"
+                color="warning"
+                onClick={login}
+                startIcon={<ShareIcon />}
+              >
+                Login to LinkedIn For Share
+              </Button>
+            )}
           </Box>
         </CardContent>
       </Card>
+      <Dialog onClose={() => setOpen(false)} open={open}>
+        <DialogTitle>Set backup account</DialogTitle>
+      </Dialog>
     </Grid>
   );
 }
