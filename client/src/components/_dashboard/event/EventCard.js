@@ -15,12 +15,15 @@ import {
   Typography,
   CardContent,
   Button,
-  Divider
+  Divider,
+  Dialog,
+  DialogTitle
 } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import ShareIcon from '@mui/icons-material/Share';
 
 // utils
+import { useState } from 'react';
+import { Alert } from '@mui/lab';
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
@@ -87,6 +90,8 @@ export default function EventCard({ post, index, token }) {
     { number: 20, icon: shareFill }
   ];
 
+  const [open, setOpen] = useState(false);
+
   const login = () => {
     window.location.href = 'http://localhost:5000/api/v1/auth';
   };
@@ -99,6 +104,7 @@ export default function EventCard({ post, index, token }) {
       },
       (res) => {
         console.log(res);
+        setOpen(true);
       },
       (err) => {
         console.log(err);
@@ -241,6 +247,9 @@ export default function EventCard({ post, index, token }) {
           </Box>
         </CardContent>
       </Card>
+      <Dialog onClose={() => setOpen(false)} open={open}>
+        <DialogTitle>Set backup account</DialogTitle>
+      </Dialog>
     </Grid>
   );
 }

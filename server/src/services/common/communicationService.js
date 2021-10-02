@@ -210,6 +210,7 @@ const CommunicationService = {
             .catch((err) =>
             {
                 // Do somthing
+                console.log(err);
             });
     },
 };
