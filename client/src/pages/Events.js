@@ -6,6 +6,7 @@ import EVENTS from '../_mocks_/events';
 import EventsSearch from '../components/_dashboard/event/EventsSearch';
 import EventCard from '../components/_dashboard/event/EventCard';
 import EventsSort from '../components/_dashboard/event/EventSort';
+import communicationService from '../utils/communication/communication.service';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +21,8 @@ const SORT_OPTIONS = [
 export default function Events() {
   const [token, setToken] = useState('');
 
+  const [eventList, setEventList] = useState('');
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
@@ -28,7 +31,17 @@ export default function Events() {
     if (code) {
       setToken(code);
     }
+
+    communicationService.getEvents(null, onSuccess, onError);
   }, []);
+
+  function onSuccess(res) {
+    setEventList(res.data);
+  }
+
+  function onError(res) {
+    console.log(res);
+  }
 
   return (
     <Page title="Dashboard: Blog | Minimal-UI">
