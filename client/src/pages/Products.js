@@ -38,54 +38,75 @@ export default function EcommerceShop() {
 
     console.log('Clicked');
 
-   
+    e.preventDefault();
+    const event = {
+      summary: inputField.summary,
+      location: inputField.location,
+      description: inputField.description,
+      imageURL: inputField.imageURL,
+      start: '2021-11-18T16:00:00Z',
+      end: '2021-11-18T16:00:00Z',
+      attendees: `${[inputField.attendees]}`,
+      category: inputField.category
+    };
+    console.log(event);
 
-    // gapi.load('client:auth2', () => {
-    //   console.log('Client loaded.');
-    //   gapi.client.init({
-    //     apiKey: API_KEY,
-    //     clientId: CLIENT_ID,
-    //     discoveryDocs: DISCOVERY_DOCS,
-    //     scope: SCOPES
-    //   });
+    axios
+      .post('http://localhost:5000/api/event/create', event)
+      .then((response) => {
+        console.log(response);
+        alert('event created');
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    //   gapi.client.load('calender', 'v3', () => console.log('Loaded'));
-    //   gapi.auth2
-    //     .getAuthInstance()
-    //     .signIn()
-    //     .then(() => {
-    //       const event = {
-    //         summary: inputField.summary,
-    //         location: inputField.location,
-    //         description: inputField.description,
-    //         start: {
-    //           dateTime: '2021-10-05T09:00:00-07:00',
-    //           timeZone: 'Asia/Colombo'
-    //         },
-    //         end: {
-    //           dateTime: '2021-10-06T17:00:00-07:00',
-    //           timeZone: 'Asia/Colombo'
-    //         },
-    //         recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
-    //         attendees: [{ email: 'lpage@example.com' }, { email: 'sbrin@example.com' }]
-    //         // reminders: {
-    //         //   useDefault: false,
-    //         //   overrides: [
-    //         //     { method: 'email', minutes: 24 * 60 },
-    //         //     { method: 'popup', minutes: 10 }
-    //         //   ]
-    //         // }
-    //       };
-    //       const request = gapi.client.calendar.events.insert({
-    //         calendarId: 'primary',
-    //         resource: event
-    //       });
+    gapi.load('client:auth2', () => {
+      console.log('Client loaded.');
+      gapi.client.init({
+        apiKey: API_KEY,
+        clientId: CLIENT_ID,
+        discoveryDocs: DISCOVERY_DOCS,
+        scope: SCOPES
+      });
 
-    //       request.execute((event) => {
-    //         window.open(event.htmlLink);
-    //       });
-    //     });
-    // });
+      gapi.client.load('calender', 'v3', () => console.log('Loaded'));
+      gapi.auth2
+        .getAuthInstance()
+        .signIn()
+        .then(() => {
+          const event = {
+            summary: inputField.summary,
+            location: inputField.location,
+            description: inputField.description,
+            start: {
+              dateTime: '2021-10-05T09:00:00-07:00',
+              timeZone: 'Asia/Colombo'
+            },
+            end: {
+              dateTime: '2021-10-06T17:00:00-07:00',
+              timeZone: 'Asia/Colombo'
+            },
+            recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
+            attendees: [{ email: 'lpage@example.com' }, { email: 'sbrin@example.com' }]
+            // reminders: {
+            //   useDefault: false,
+            //   overrides: [
+            //     { method: 'email', minutes: 24 * 60 },
+            //     { method: 'popup', minutes: 10 }
+            //   ]
+            // }
+          };
+          const request = gapi.client.calendar.events.insert({
+            calendarId: 'primary',
+            resource: event
+          });
+
+          request.execute((event) => {
+            window.open(event.htmlLink);
+          });
+        });
+    });
   };
 
   return (
