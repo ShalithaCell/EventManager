@@ -3,10 +3,11 @@ const koaBody = require('koa-body');
 const KoaStatic = require('koa-static');
 const cors = require('@koa/cors');
 const router = require('./api');
-const { dbContext, exceptionService } = require('./services');
+const { dbContext, exceptionService, InMemoryDb } = require('./services');
 
 // init the database connection.
 dbContext();
+InMemoryDb.init();
 
 const app = new Koa();
 
@@ -20,7 +21,7 @@ app
     .use(exceptionService.errorHandler) // register generic error handler middleware
     .use(exceptionService.jsonErrorHandler) // register json error handler middleware
     .use(cors()) // allowed CORS
-    .use(router()) // Use the Router on the sub routes
+    .use(router())
     .use(KoaStatic('public')); // server statics
 
 // Bootstrap the server

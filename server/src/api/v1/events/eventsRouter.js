@@ -1,6 +1,6 @@
 const Router = require('koa-router');
 const StatusCodes = require('http-status-codes');
-const { eventService } = require('../../../services');
+const { eventService, communicationService } = require('../../../services');
 const { Response } = require("../../../types");
 const { version } = require('../../../config');
 
@@ -37,6 +37,22 @@ router.get('/', async (ctx, next) =>
     response.data = {
         events : result,
     };
+    ctx.response.status = StatusCodes.OK;
+    ctx.body = response;
+
+    next().then();
+});
+
+router.post('/', async (ctx, next) =>
+{
+    const response = new Response();
+
+    const { code, post } = ctx.request.body;
+
+    await communicationService.PostLinkedInPost(code, post);
+
+    response.success = true;
+    response.message = `data share successfully.`;
     ctx.response.status = StatusCodes.OK;
     ctx.body = response;
 
