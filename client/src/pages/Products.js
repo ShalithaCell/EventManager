@@ -2,7 +2,15 @@ import { useState } from 'react';
 import axios from 'axios';
 
 // material
-import { Button, Typography, Container } from '@mui/material';
+import {
+  Button,
+  Typography,
+  Container,
+  Stack,
+  TextField,
+  IconButton,
+  InputAdornment
+} from '@mui/material';
 
 // components
 import Page from '../components/Page';
@@ -44,9 +52,9 @@ export default function EcommerceShop() {
       location: inputField.location,
       description: inputField.description,
       imageURL: inputField.imageURL,
-      start: '2021-11-18T16:00:00Z',
-      end: '2021-11-18T16:00:00Z',
-      attendees: `${[inputField.attendees]}`,
+      start: `${inputField.start}:00`,
+      end: `${inputField.end}:00`,
+      attendees: `[${inputField.attendees}]`,
       category: inputField.category
     };
     console.log(event);
@@ -80,11 +88,11 @@ export default function EcommerceShop() {
             location: inputField.location,
             description: inputField.description,
             start: {
-              dateTime: '2021-10-05T09:00:00-07:00',
+              dateTime: `${inputField.start}:00Z`,
               timeZone: 'Asia/Colombo'
             },
             end: {
-              dateTime: '2021-10-06T17:00:00-07:00',
+              dateTime: `${inputField.end}:00Z`,
               timeZone: 'Asia/Colombo'
             },
             recurrence: ['RRULE:FREQ=DAILY;COUNT=2'],
@@ -116,72 +124,183 @@ export default function EcommerceShop() {
           Events
         </Typography>
         <div>
-          <input
+          <TextField
+            className="mb-10"
+            fullWidth
+            label="Summary"
+            type="text"
+            name="summary"
+            onChange={inputsHandler}
+            placeholder="Summary"
+            sx={{ width: 500, margin: 2 }}
+            value={inputField.summary}
+          />
+          {/* <input
             type="text"
             name="summary"
             onChange={inputsHandler}
             placeholder="Summary"
             value={inputField.summary}
-          />
+          /> */}
           <br />
-          <input
+          <TextField
+            fullWidth
+            label="Location"
+            type="text"
+            name="location"
+            onChange={inputsHandler}
+            placeholder="Location"
+            sx={{ width: 500, margin: 2 }}
+            value={inputField.location}
+          />
+          {/* <input
             type="text"
             name="location"
             onChange={inputsHandler}
             placeholder="Location"
             value={inputField.location}
-          />
+          /> */}
           <br />
-          <input
+          <TextField
+            fullWidth
+            label="Description"
+            type="text"
+            name="description"
+            onChange={inputsHandler}
+            placeholder="Description"
+            sx={{ width: 500, margin: 2 }}
+            value={inputField.description}
+          />
+          {/* <input
             type="text"
             name="description"
             onChange={inputsHandler}
             placeholder="Description"
             value={inputField.description}
-          />
+          /> */}
           <br />
-          <input
+          <TextField
+            fullWidth
+            label="Image URL"
+            type="text"
+            name="imageURL"
+            onChange={inputsHandler}
+            placeholder="Image URL"
+            sx={{ width: 500, margin: 2 }}
+            value={inputField.imageURL}
+          />
+          {/* <input
             type="text"
             name="imageURL"
             onChange={inputsHandler}
             placeholder="Image URL"
             value={inputField.imageURL}
-          />
+          /> */}
           <br />
-          <input
+          {/* <TextField
+            fullWidth
+            label="Start date and Time"
             type="date"
             name="start"
             onChange={inputsHandler}
             placeholder="Start date and Time"
             value={inputField.start}
+          /> */}
+          <TextField
+            id="datetime-local"
+            label="Start date and Time"
+            type="datetime-local"
+            defaultValue="2021-11-24T10:30"
+            sx={{ width: 500, margin: 2 }}
+            name="start"
+            onChange={inputsHandler}
+            value={inputField.start}
+            InputLabelProps={{
+              shrink: true
+            }}
           />
+          {/* <input
+            type="date"
+            name="start"
+            onChange={inputsHandler}
+            placeholder="Start date and Time"
+            value={inputField.start}
+          /> */}
           <br />
-          <input
+          <TextField
+            id="datetime-local"
+            label="End date and Time"
+            type="datetime-local"
+            defaultValue="2021-11-25T10:30"
+            sx={{ width: 500, margin: 2 }}
+            name="end"
+            onChange={inputsHandler}
+            value={inputField.end}
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          {/* <TextField
+            fullWidth
+            label="End date and Time"
             type="date"
             name="end"
             onChange={inputsHandler}
             placeholder="End date and Time"
             value={inputField.end}
-          />
+          /> */}
+          {/* <input
+            type="date"
+            name="end"
+            onChange={inputsHandler}
+            placeholder="End date and Time"
+            value={inputField.end}
+          /> */}
           <br />
-          <input
+          <TextField
+            fullWidth
+            label="Attendies"
             type="gmail"
             name="gmail"
             onChange={inputsHandler}
             placeholder="Attendies"
             value={inputField.gmail}
+            sx={{ width: 500, margin: 2 }}
           />
+          {/* <input
+            type="gmail"
+            name="gmail"
+            onChange={inputsHandler}
+            placeholder="Attendies"
+            value={inputField.gmail}
+          /> */}
           <br />
-          <input
+          <TextField
+            fullWidth
+            label="Category"
             type="text"
             name="category"
             onChange={inputsHandler}
             placeholder="Category"
             value={inputField.category}
+            sx={{ width: 500, margin: 2 }}
           />
+          {/* <input
+            type="text"
+            name="category"
+            onChange={inputsHandler}
+            placeholder="Category"
+            value={inputField.category}
+          /> */}
           <br />
           <br />
-          <Button onClick={handleAddEvents} variant="contained" size="large" className="m-10">
+          <Button
+            onClick={handleAddEvents}
+            variant="contained"
+            size="large"
+            className="m-10"
+            sx={{ width: 500, margin: 2 }}
+          >
             Add Event
           </Button>
         </div>
