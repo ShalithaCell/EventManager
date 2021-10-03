@@ -99,10 +99,6 @@ export default function Page404() {
               />
             </motion.div>
 
-            <Button onClick={handleAddEvents} variant="contained" size="large" className="m-10">
-              Add Event
-            </Button>
-
             <Button to="/" size="large" variant="contained" component={RouterLink}>
               Go to Home
             </Button>
