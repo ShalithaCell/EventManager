@@ -5,7 +5,10 @@ const communicationService = {
   getEvents: (body, onSuccess, onError) =>
     axios
       .get(EVENTS_END_POINTS)
-      .then((response) => onSuccess(response))
+      .then((response) => {
+        console.log(response);
+        onSuccess(response);
+      })
       .catch((error) => onError(error.response ?? error.request ?? error)),
   auth: (body, onSuccess, onError) =>
     axios
