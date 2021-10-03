@@ -17,7 +17,10 @@ import {
   Button,
   Divider,
   Dialog,
-  DialogTitle
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 
@@ -97,10 +100,11 @@ export default function EventCard({ post, index, token }) {
   };
 
   const sharePost = () => {
-    console.log('called');
+    console.log(post.id);
     communicationService.sharePost(
       {
-        code: token
+        code: token,
+        post
       },
       (res) => {
         console.log(res);
@@ -196,7 +200,7 @@ export default function EventCard({ post, index, token }) {
               })
             }}
           >
-            {description}
+            {summary}
           </TitleStyle>
 
           <InfoStyle>
@@ -248,7 +252,17 @@ export default function EventCard({ post, index, token }) {
         </CardContent>
       </Card>
       <Dialog onClose={() => setOpen(false)} open={open}>
-        <DialogTitle>Set backup account</DialogTitle>
+        <DialogTitle>Successful</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Event shared successfully.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)} autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
       </Dialog>
     </Grid>
   );
