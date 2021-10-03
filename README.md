@@ -25,11 +25,11 @@ The purpose of this project is handling 0Auth2 mechanisms.
 
 ### 3. override the configurations (optional).
 
- i. Basic Configurations (database, site settings)
+ 1. Basic Configurations (database, site settings)
     * Goto server folder and open .env file.
     * Replace parameters with your configs.
     
- ii. LinkedIn Client Configurations
+ 2. LinkedIn Client Configurations
     * Goto server folder and open ___credentials.linkedin.js___ file.
     * Replace parameters with your configs.
 
