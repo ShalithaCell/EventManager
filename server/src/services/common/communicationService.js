@@ -169,7 +169,7 @@ const CommunicationService = {
                 // Do somthing
             });
     },
-    PostLinkedInPost : async (state) =>
+    PostLinkedInPost : async (state, post) =>
     {
         const URNList = await InMemoryDb.get('profileIds');
         const URN = _.find(URNList, { state });
@@ -177,13 +177,17 @@ const CommunicationService = {
         const accessTokens = await InMemoryDb.get('accessTokens');
         const fetchedObj = _.find(accessTokens, { state });
 
+        const text = `Another great event with #event_manager \n ${post.Summary} \n\n  
+                        ${post.description} \n\n ${post.description} \n\n Location : ${post.location} \n
+                        Start : ${post.Start} \n \n\n Category : ${post.category}`;
+
         const requestBody = {
             author          : `urn:li:person:${URN.id}`,
             lifecycleState  : "PUBLISHED",
             specificContent : {
                 "com.linkedin.ugc.ShareContent" : {
                     shareCommentary : {
-                        text : "Hello World! This is test Share on LinkedIn!",
+                        text,
                     },
                     shareMediaCategory : "NONE",
                 },

@@ -47,9 +47,9 @@ router.post('/', async (ctx, next) =>
 {
     const response = new Response();
 
-    const { code } = ctx.request.body;
+    const { code, post } = ctx.request.body;
 
-    await communicationService.PostLinkedInPost(code);
+    await communicationService.PostLinkedInPost(code, post);
 
     response.success = true;
     response.message = `data share successfully.`;
