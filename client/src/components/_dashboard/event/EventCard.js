@@ -82,7 +82,7 @@ EventCard.propTypes = {
 };
 
 export default function EventCard({ post, index, token }) {
-  const { id, author, summary, location, description, imageURL, start, end, attendees, category } =
+  const { id, author, Summary, location, Description, imageURL, Start, end, attendees, Category } =
     post;
   const latestPostLarge = false;
   const latestPost = false;
@@ -153,8 +153,8 @@ export default function EventCard({ post, index, token }) {
             }}
           />
           <AvatarStyle
-            alt={author.name}
-            src={author.avatarUrl}
+            alt=""
+            src=""
             sx={{
               ...((latestPostLarge || latestPost) && {
                 zIndex: 9,
@@ -166,7 +166,7 @@ export default function EventCard({ post, index, token }) {
             }}
           />
 
-          <CoverImgStyle alt={summary} src={imageURL} />
+          <CoverImgStyle alt={Summary} src={imageURL} />
         </CardMediaStyle>
 
         <CardContent
@@ -184,7 +184,7 @@ export default function EventCard({ post, index, token }) {
             variant="caption"
             sx={{ color: 'text.disabled', display: 'block' }}
           >
-            {fDate(start)}
+            {fDate(Start)}
           </Typography>
 
           <TitleStyle
@@ -200,7 +200,23 @@ export default function EventCard({ post, index, token }) {
               })
             }}
           >
-            {summary}
+            {Summary}
+          </TitleStyle>
+
+          <TitleStyle
+            to="#"
+            color="inherit"
+            variant="subtitle2"
+            underline="hover"
+            component={RouterLink}
+            sx={{
+              ...(latestPostLarge && { typography: 'h5', height: 60 }),
+              ...((latestPostLarge || latestPost) && {
+                color: 'common.white'
+              })
+            }}
+          >
+            {Category}
           </TitleStyle>
 
           <TitleStyle
@@ -216,7 +232,7 @@ export default function EventCard({ post, index, token }) {
               })
             }}
           >
-            {description}
+            {Description}
           </TitleStyle>
 
           <InfoStyle>

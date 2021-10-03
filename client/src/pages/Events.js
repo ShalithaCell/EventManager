@@ -27,7 +27,6 @@ export default function Events() {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
 
-    console.log(code);
     if (code) {
       setToken(code);
     }
@@ -35,16 +34,19 @@ export default function Events() {
     communicationService.getEvents(null, onSuccess, onError);
   }, []);
 
-  function onSuccess(res) {
-    setEventList(res.data);
-  }
+  const onSuccess = (response) => {
+    console.log('success');
+    console.log(response);
+    setEventList(response.data.data.events);
+  };
 
-  function onError(res) {
+  const onError = (res) => {
+    console.log('err');
     console.log(res);
-  }
+  };
 
   return (
-    <Page title="Dashboard: Blog | Minimal-UI">
+    <Page title="Dashboard: Events">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -58,9 +60,10 @@ export default function Events() {
         </Stack>
 
         <Grid container spacing={3}>
-          {EVENTS.map((event, index) => (
-            <EventCard key={event.id} post={event} index={index} token={token} />
-          ))}
+          {eventList &&
+            eventList.map((event, index) => (
+              <EventCard key={event._id} post={event} index={index} token={token} />
+            ))}
         </Grid>
       </Container>
     </Page>
