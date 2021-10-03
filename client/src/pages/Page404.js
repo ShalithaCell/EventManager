@@ -98,7 +98,6 @@ export default function Page404() {
                 sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
               />
             </motion.div>
-
             <Button onClick={handleAddEvents} variant="contained" size="large" className="m-10">
               Add Event
             </Button>
