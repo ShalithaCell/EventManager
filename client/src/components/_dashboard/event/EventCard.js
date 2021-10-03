@@ -203,6 +203,22 @@ export default function EventCard({ post, index, token }) {
             {summary}
           </TitleStyle>
 
+          <TitleStyle
+            to="#"
+            color="inherit"
+            variant="body1"
+            underline="hover"
+            component={RouterLink}
+            sx={{
+              ...(latestPostLarge && { typography: 'h5', height: 60 }),
+              ...((latestPostLarge || latestPost) && {
+                color: 'common.white'
+              })
+            }}
+          >
+            {description}
+          </TitleStyle>
+
           <InfoStyle>
             {POST_INFO.map((info, index) => (
               <Box
